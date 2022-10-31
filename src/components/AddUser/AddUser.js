@@ -6,6 +6,21 @@ const AddUser = () => {
     const handleAddUser = event => {
         event.preventDefault();
         console.log(user);
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    alert('user added successfully');
+                    event.target.reset();
+                }
+            })
+
     }
 
     const handleInputBlur = event => {
@@ -13,7 +28,8 @@ const AddUser = () => {
         const field = event.target.name;
         const newUser = { ...user };
         newUser[field] = value;
-        setUser(newUser)
+        setUser(newUser);
+
 
 
     }
